@@ -68,3 +68,9 @@ func (c *Client) makeRequest(
 
 	return resp, nil
 }
+
+var YkClient *Client
+
+func InitClient(accountId string, secretKey string) {
+	YkClient = NewClient(accountId, secretKey)
+}
