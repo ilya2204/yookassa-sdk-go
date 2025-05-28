@@ -12,7 +12,7 @@
 </div>
 
 ### Установка
-`go get github.com/ilya2204/yookassa-sdk-go`
+`go get github.com/rvinnie/yookassa-sdk-go`
 
 ### Начало работы
 1. Импортируйте модуль
