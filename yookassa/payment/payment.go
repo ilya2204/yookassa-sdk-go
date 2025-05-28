@@ -2,6 +2,7 @@
 package yoopayment
 
 import (
+	"fmt"
 	"time"
 
 	yoocommon "github.com/ilya2204/yookassa-sdk-go/yookassa/common"
@@ -103,4 +104,16 @@ type Payment struct {
 	// The identifier of the customer in your system, such as email address or phone number.
 	// No more than 200 characters.
 	MerchantCustomerID string `json:"merchant_customer_id,omitempty" binding:"max=200"`
+}
+
+func (p *Payment) GetConfirmationToken() (error, string) {
+	if m, ok := p.Confirmation.(map[string]any); ok {
+		if token, ok := m["confirmation_token"].(string); ok {
+			return nil, token
+		} else {
+			return fmt.Errorf("confirmation_token not found in confirmation map"), ""
+		}
+	} else {
+		return fmt.Errorf("confirmation is not a map"), ""
+	}
 }

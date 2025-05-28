@@ -130,9 +130,6 @@ func (p *PaymentHandler) CreatePayment(payment *yoopayment.Payment) (*yoopayment
 		return nil, err
 	}
 
-	if paymentResponse.Confirmation == nil {
-		return nil, errors.New("empty confirmation url")
-	}
 	return paymentResponse, nil
 }
 
