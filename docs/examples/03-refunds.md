@@ -23,8 +23,8 @@
 
 ```go
 import (
-    "github.com/rvinnie/yookassa-sdk-go/yookassa"
-    "github.com/rvinnie/yookassa-sdk-go/yookassa/refund"
+    "github.com/ilya2204/yookassa-sdk-go/yookassa"
+    "github.com/ilya2204/yookassa-sdk-go/yookassa/refund"
 )
 
 func main() {
@@ -56,8 +56,8 @@ func main() {
 
 ```go
 import (
-    "github.com/rvinnie/yookassa-sdk-go/yookassa"
-    "github.com/rvinnie/yookassa-sdk-go/yookassa/refund"
+    "github.com/ilya2204/yookassa-sdk-go/yookassa"
+    "github.com/ilya2204/yookassa-sdk-go/yookassa/refund"
 )
 
 func main() {
@@ -86,8 +86,8 @@ func main() {
 
 ```go
 import (
-    "github.com/rvinnie/yookassa-sdk-go/yookassa"
-    "github.com/rvinnie/yookassa-sdk-go/yookassa/refund"
+    "github.com/ilya2204/yookassa-sdk-go/yookassa"
+    "github.com/ilya2204/yookassa-sdk-go/yookassa/refund"
 )
 
 func main() {

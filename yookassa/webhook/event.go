@@ -1,8 +1,8 @@
 package yoowebhook
 
 import (
-	yoopayment "github.com/rvinnie/yookassa-sdk-go/yookassa/payment"
-	yoopayout "github.com/rvinnie/yookassa-sdk-go/yookassa/payout"
+	yoopayment "github.com/ilya2204/yookassa-sdk-go/yookassa/payment"
+	yoopayout "github.com/ilya2204/yookassa-sdk-go/yookassa/payout"
 )
 
 type WebhookType string

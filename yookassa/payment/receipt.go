@@ -1,6 +1,6 @@
 package yoopayment
 
-import yoocommon "github.com/rvinnie/yookassa-sdk-go/yookassa/common"
+import yoocommon "github.com/ilya2204/yookassa-sdk-go/yookassa/common"
 
 type Receipt struct {
 	// Customer info

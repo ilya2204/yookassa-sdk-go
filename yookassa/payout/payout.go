@@ -1,6 +1,6 @@
 package yoopayout
 
-import yoocommon "github.com/rvinnie/yookassa-sdk-go/yookassa/common"
+import yoocommon "github.com/ilya2204/yookassa-sdk-go/yookassa/common"
 
 // See https://yookassa.ru/developers/payouts/making-payouts/sbp?lang=en
 
