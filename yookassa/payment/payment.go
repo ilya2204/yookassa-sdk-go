@@ -106,14 +106,40 @@ type Payment struct {
 	MerchantCustomerID string `json:"merchant_customer_id,omitempty" binding:"max=200"`
 }
 
-func (p *Payment) GetConfirmationToken() (error, string) {
-	if m, ok := p.Confirmation.(map[string]any); ok {
-		if token, ok := m["confirmation_token"].(string); ok {
-			return nil, token
-		} else {
-			return fmt.Errorf("confirmation_token not found in confirmation map"), ""
-		}
-	} else {
-		return fmt.Errorf("confirmation is not a map"), ""
+func (p *Payment) GetConfirmationToken() (string, error) {
+	m, ok := p.Confirmation.(map[string]any)
+	if !ok {
+		return "", fmt.Errorf("confirmation is not a map")
 	}
+	raw, ok := m["confirmation_token"]
+	if !ok {
+		return "", fmt.Errorf("confirmation_token not found in confirmation map")
+	}
+	token, ok := raw.(string)
+	if !ok {
+		return "", fmt.Errorf("confirmation_token is not a string, got %T", raw)
+	}
+	if token == "" {
+		return "", fmt.Errorf("confirmation_token is empty")
+	}
+	return token, nil
+}
+
+func (p *Payment) GetInvoiceIdFromMetadata() (string, error) {
+	m, ok := p.Metadata.(map[string]any)
+	if !ok {
+		return "", fmt.Errorf("metadata is not a map[string]any, got %T", p.Metadata)
+	}
+	raw, ok := m["invoice_id"]
+	if !ok {
+		return "", fmt.Errorf("invoice_id not found in metadata map")
+	}
+	id, ok := raw.(string)
+	if !ok {
+		return "", fmt.Errorf("invoice_id is not a string, got %T", raw)
+	}
+	if id == "" {
+		return "", fmt.Errorf("invoice_id is empty")
+	}
+	return id, nil
 }
