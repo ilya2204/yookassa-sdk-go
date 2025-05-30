@@ -39,8 +39,8 @@ type paymentMethod struct {
 }
 
 type SbpPayerBankDetails struct {
-	BankId string `json:"bank_id"`
-	Bic    string `json:"bic"`
+	BankId string `json:"bank_id" validate:"required"`
+	Bic    string `json:"bic" validate:"required"`
 }
 
 type PaymentMethodWithCard struct {
@@ -122,7 +122,7 @@ type Sberbank struct {
 type SBP struct {
 	paymentMethod
 
-	PayerBankDetails SbpPayerBankDetails `json:"payer_bank_details,omitempty"`
+	PayerBankDetails SbpPayerBankDetails `json:"payer_bank_details"`
 }
 
 type TinkoffBank struct {
