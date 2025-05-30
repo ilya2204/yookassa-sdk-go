@@ -154,7 +154,17 @@ func (p *Payment) GetPaymentMethodWithCard() (PaymentMethodWithCard, error) {
 }
 
 func (p *Payment) GetPaymentMethodSbp() (SBP, error) {
-	return convertPaymentMethod[SBP](p.PaymentMethod)
+	sbp, err := convertPaymentMethod[SBP](p.PaymentMethod)
+
+	if err != nil {
+		return sbp, err
+	}
+
+	if sbp.paymentMethod.Type != PaymentTypeSBP {
+		return sbp, fmt.Errorf("payment method is not SBP, got %s", sbp.paymentMethod.Type)
+	}
+
+	return sbp, nil
 }
 
 func convertPaymentMethod[T any](pm interface{}) (T, error) {
