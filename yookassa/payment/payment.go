@@ -157,13 +157,29 @@ func (p *Payment) GetPaymentMethodSbp() (SBP, error) {
 	return convertPaymentMethod[SBP](p.PaymentMethod)
 }
 
+type Validator interface {
+	Validate() error
+}
+
+// Обновленная generic функция с валидацией
 func convertPaymentMethod[T any](pm interface{}) (T, error) {
 	var zero T
 
 	switch v := pm.(type) {
 	case *T:
-		return *v, nil
+		result := *v
+		if validator, ok := any(result).(Validator); ok {
+			if err := validator.Validate(); err != nil {
+				return zero, err
+			}
+		}
+		return result, nil
 	case T:
+		if validator, ok := any(v).(Validator); ok {
+			if err := validator.Validate(); err != nil {
+				return zero, err
+			}
+		}
 		return v, nil
 	case map[string]interface{}:
 		jsonData, err := json.Marshal(v)
@@ -176,8 +192,21 @@ func convertPaymentMethod[T any](pm interface{}) (T, error) {
 			return zero, fmt.Errorf("failed to unmarshal to %T: %w", result, err)
 		}
 
+		if validator, ok := any(result).(Validator); ok {
+			if err := validator.Validate(); err != nil {
+				return zero, err
+			}
+		}
+
 		return result, nil
 	default:
 		return zero, fmt.Errorf("unsupported payment method type: %T", pm)
 	}
+}
+
+func (s *SBP) Validate() error {
+	if s.PayerBankDetails.BankId == "" || s.PayerBankDetails.Bic == "" {
+		return fmt.Errorf("SBP payment method requires both bank_id and bic in payer_bank_details")
+	}
+	return nil
 }
