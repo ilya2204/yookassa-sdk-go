@@ -38,6 +38,22 @@ type paymentMethod struct {
 	Title string `json:"title,omitempty"`
 }
 
+type SbpPayerBankDetails struct {
+	BankId string `json:"bank_id"`
+	Bic    string `json:"bic"`
+}
+
+type PaymentMethodWithCard struct {
+	paymentMethod
+
+	// Bank card details.
+	Card Card `json:"card,omitempty"`
+}
+
+type BasePaymentMethod struct {
+	paymentMethod
+}
+
 type Alfabank struct {
 	paymentMethod
 
@@ -105,6 +121,8 @@ type Sberbank struct {
 
 type SBP struct {
 	paymentMethod
+
+	PayerBankDetails SbpPayerBankDetails `json:"payer_bank_details,omitempty"`
 }
 
 type TinkoffBank struct {

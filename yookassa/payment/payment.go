@@ -143,3 +143,30 @@ func (p *Payment) GetInvoiceIdFromMetadata() (string, error) {
 	}
 	return id, nil
 }
+
+func (p *Payment) GetBasePaymentMethod() (BasePaymentMethod, error) {
+	switch pm := p.PaymentMethod.(type) {
+	case *BasePaymentMethod:
+		return *pm, nil
+	default:
+		return BasePaymentMethod{}, fmt.Errorf("unsupported payment method type: %T", pm)
+	}
+}
+
+func (p *Payment) GetPaymentMethodWithCard() (PaymentMethodWithCard, error) {
+	switch pm := p.PaymentMethod.(type) {
+	case *PaymentMethodWithCard:
+		return *pm, nil
+	default:
+		return PaymentMethodWithCard{}, fmt.Errorf("unsupported payment method type: %T", pm)
+	}
+}
+
+func (p *Payment) GetPaymentMethodSbp() (SBP, error) {
+	switch pm := p.PaymentMethod.(type) {
+	case *SBP:
+		return *pm, nil
+	default:
+		return SBP{}, fmt.Errorf("unsupported payment method type: %T", pm)
+	}
+}
