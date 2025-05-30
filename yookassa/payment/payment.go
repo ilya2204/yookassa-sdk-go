@@ -160,6 +160,8 @@ func (p *Payment) GetPaymentMethodSbp() (SBP, error) {
 		return sbp, err
 	}
 
+	fmt.Println("ALE", sbp.Type)
+
 	if sbp.paymentMethod.Type != PaymentTypeSBP {
 		return sbp, fmt.Errorf("payment method is not SBP, got %s", sbp.paymentMethod.Type)
 	}
