@@ -122,7 +122,7 @@ type Sberbank struct {
 type SBP struct {
 	paymentMethod
 
-	PayerBankDetails SbpPayerBankDetails `json:"payer_bank_details,omitempty"`
+	PayerBankDetails SbpPayerBankDetails `json:"payer_bank_details"`
 }
 
 type TinkoffBank struct {
