@@ -2,6 +2,7 @@
 package yoopayment
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -145,28 +146,38 @@ func (p *Payment) GetInvoiceIdFromMetadata() (string, error) {
 }
 
 func (p *Payment) GetBasePaymentMethod() (BasePaymentMethod, error) {
-	switch pm := p.PaymentMethod.(type) {
-	case *BasePaymentMethod:
-		return *pm, nil
-	default:
-		return BasePaymentMethod{}, fmt.Errorf("unsupported payment method type: %T", pm)
-	}
+	return convertPaymentMethod[BasePaymentMethod](p.PaymentMethod)
 }
 
 func (p *Payment) GetPaymentMethodWithCard() (PaymentMethodWithCard, error) {
-	switch pm := p.PaymentMethod.(type) {
-	case *PaymentMethodWithCard:
-		return *pm, nil
-	default:
-		return PaymentMethodWithCard{}, fmt.Errorf("unsupported payment method type: %T", pm)
-	}
+	return convertPaymentMethod[PaymentMethodWithCard](p.PaymentMethod)
 }
 
 func (p *Payment) GetPaymentMethodSbp() (SBP, error) {
-	switch pm := p.PaymentMethod.(type) {
-	case *SBP:
-		return *pm, nil
+	return convertPaymentMethod[SBP](p.PaymentMethod)
+}
+
+func convertPaymentMethod[T any](pm interface{}) (T, error) {
+	var zero T
+
+	switch v := pm.(type) {
+	case *T:
+		return *v, nil
+	case T:
+		return v, nil
+	case map[string]interface{}:
+		jsonData, err := json.Marshal(v)
+		if err != nil {
+			return zero, fmt.Errorf("failed to marshal map: %w", err)
+		}
+
+		var result T
+		if err := json.Unmarshal(jsonData, &result); err != nil {
+			return zero, fmt.Errorf("failed to unmarshal to %T: %w", result, err)
+		}
+
+		return result, nil
 	default:
-		return SBP{}, fmt.Errorf("unsupported payment method type: %T", pm)
+		return zero, fmt.Errorf("unsupported payment method type: %T", pm)
 	}
 }
