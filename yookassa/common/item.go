@@ -1,5 +1,10 @@
 package yoocommon
 
+import (
+	"encoding/json"
+	"unicode/utf8"
+)
+
 type Item struct {
 	// parameter with the name of the product or service
 	Description string `json:"description"`
@@ -18,4 +23,19 @@ type Item struct {
 	PaymentSubject string `json:"payment_subject,omitempty"`
 
 	PaymentMode string `json:"payment_mode,omitempty"`
+}
+
+const MAX_DESCRIPTION_LENGTH = 128
+
+func (u Item) MarshalJSON() ([]byte, error) {
+	type Alias Item
+
+	truncated := u
+	
+	if utf8.RuneCountInString(u.Description) > MAX_DESCRIPTION_LENGTH {
+		runes := []rune(u.Description)
+		truncated.Description = string(runes[:MAX_DESCRIPTION_LENGTH]) + "..."
+	}
+
+	return json.Marshal(Alias(truncated))
 }
