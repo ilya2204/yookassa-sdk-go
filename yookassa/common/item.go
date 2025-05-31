@@ -5,11 +5,17 @@ type Item struct {
 	Description string `json:"description"`
 
 	// parameter with the amount per unit of product
-	Quantity string `json:"quantity"`
+	Quantity int `json:"quantity"`
 
 	// parameter specifying the quantity of goods (only integers, for example 1)
 	Amount *Amount `json:"amount"`
 
 	// parameter with the fixed value 1 (price without VAT)
-	VatCode string `json:"vat_code"`
+	VatCode int `json:"vat_code"`
+
+	Measure string `json:"measure,omitempty"`
+
+	PaymentSubject string `json:"payment_subject,omitempty"`
+
+	PaymentMode string `json:"payment_mode,omitempty"`
 }
