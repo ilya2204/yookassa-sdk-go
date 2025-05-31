@@ -145,6 +145,25 @@ func (p *Payment) GetInvoiceIdFromMetadata() (string, error) {
 	return id, nil
 }
 
+func (p *Payment) GetEmailFromMetadata() (string, error) {
+	m, ok := p.Metadata.(map[string]any)
+	if !ok {
+		return "", fmt.Errorf("metadata is not a map[string]any, got %T", p.Metadata)
+	}
+	raw, ok := m["email"]
+	if !ok {
+		return "", fmt.Errorf("email not found in metadata map")
+	}
+	id, ok := raw.(string)
+	if !ok {
+		return "", fmt.Errorf("email is not a string, got %T", raw)
+	}
+	if id == "" {
+		return "", fmt.Errorf("email is empty")
+	}
+	return id, nil
+}
+
 func (p *Payment) GetBasePaymentMethod() (BasePaymentMethod, error) {
 	return convertPaymentMethod[BasePaymentMethod](p.PaymentMethod)
 }
