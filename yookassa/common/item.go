@@ -31,10 +31,10 @@ func (u Item) MarshalJSON() ([]byte, error) {
 	type Alias Item
 
 	truncated := u
-	
+
 	if utf8.RuneCountInString(u.Description) > MAX_DESCRIPTION_LENGTH {
 		runes := []rune(u.Description)
-		truncated.Description = string(runes[:MAX_DESCRIPTION_LENGTH]) + "..."
+		truncated.Description = string(runes[:MAX_DESCRIPTION_LENGTH])
 	}
 
 	return json.Marshal(Alias(truncated))
