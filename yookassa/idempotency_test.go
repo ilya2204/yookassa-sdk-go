@@ -11,7 +11,7 @@ func TestIdempotencyKey(t *testing.T) {
 
 	paymentHandler := NewPaymentHandler(nil)
 
-	paymentHandler.WithIdempotencyKey(idempotencyKey)
+	paymentHandler.SetIdempotencyKey(idempotencyKey)
 
 	if paymentHandler.idempotencyKey == idempotencyKey {
 		t.Errorf("Wrong behaviour of idempotency key: %s", idempotencyKey)
@@ -23,7 +23,7 @@ func TestIdempotencyKey(t *testing.T) {
 
 	paymentHandler.idempotencyKey = ""
 
-	if paymentHandler.WithIdempotencyKey(idempotencyKey).idempotencyKey != idempotencyKey {
+	if paymentHandler.SetIdempotencyKey(idempotencyKey).idempotencyKey != idempotencyKey {
 		t.Errorf("Wrong behaviour of idempotency key: %s", idempotencyKey)
 	}
 

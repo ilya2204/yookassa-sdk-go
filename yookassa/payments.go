@@ -28,10 +28,8 @@ func NewPaymentHandler(client *Client) *PaymentHandler {
 	return &PaymentHandler{client: client}
 }
 
-func (p PaymentHandler) WithIdempotencyKey(idempotencyKey string) *PaymentHandler {
+func (p *PaymentHandler) SetIdempotencyKey(idempotencyKey string) {
 	p.idempotencyKey = idempotencyKey
-
-	return &p
 }
 
 // CapturePayment confirms payment, accepts and returns the Payment entity.

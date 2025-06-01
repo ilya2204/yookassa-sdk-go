@@ -23,10 +23,8 @@ func NewPayoutHandler(client *Client) *PayoutHandler {
 	return &PayoutHandler{client: client}
 }
 
-func (p PayoutHandler) WithIdempotencyKey(idempotencyKey string) *PayoutHandler {
+func (p *PayoutHandler) SetIdempotencyKey(idempotencyKey string) {
 	p.idempotencyKey = idempotencyKey
-
-	return &p
 }
 
 func (p *PayoutHandler) GetSbpBanks() ([]yoopayout.SbpBank, error) {

@@ -25,10 +25,8 @@ func NewRefundHandler(client *Client) *RefundHandler {
 	return &RefundHandler{client: client}
 }
 
-func (r RefundHandler) WithIdempotencyKey(idempotencyKey string) RefundHandler {
+func (r *RefundHandler) SetIdempotencyKey(idempotencyKey string) {
 	r.idempotencyKey = idempotencyKey
-
-	return r
 }
 
 // CreateRefund creates a refund, accepts and returns the Refund entity.

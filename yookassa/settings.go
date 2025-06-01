@@ -24,10 +24,8 @@ func NewSettingsHandler(client *Client) *SettingsHandler {
 	return &SettingsHandler{client: client}
 }
 
-func (r SettingsHandler) WithIdempotencyKey(idempotencyKey string) SettingsHandler {
+func (r *SettingsHandler) SetIdempotencyKey(idempotencyKey string) {
 	r.idempotencyKey = idempotencyKey
-
-	return r
 }
 
 // GetAccountSettings gets the client account settings.
