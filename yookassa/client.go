@@ -49,6 +49,8 @@ func (c *Client) makeRequest(
 	if method == http.MethodPost {
 		req.Header.Set("Content-Type", "application/json")
 		req.Header.Set("Idempotence-Key", idempotencyKey)
+
+		fmt.Println("NEW POST Idempotence-Key:", idempotencyKey)
 	}
 
 	req.SetBasicAuth(c.accountId, c.secretKey)
